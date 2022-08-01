@@ -3,8 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/user/Desktop/android/Quotes/app/src/main/res/drawable/ic_broken_image.xml" value="0.1" />
+        <entry key="..\:/Users/user/Desktop/android/Quotes/app/src/main/res/drawable/ic_connection_error.xml" value="0.1" />
+        <entry key="..\:/Users/user/Desktop/android/Quotes/app/src/main/res/drawable/loading_animation.xml" value="0.1" />
+        <entry key="..\:/Users/user/Desktop/android/Quotes/app/src/main/res/drawable/loding_img.xml" value="0.1" />
         <entry key="..\:/Users/user/Desktop/android/Quotes/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/Users/user/Desktop/android/Quotes/app/src/main/res/layout/fragment_quotes.xml" value="0.1287568306010929" />
+        <entry key="..\:/Users/user/Desktop/android/Quotes/app/src/main/res/layout/fragment_quotes.xml" value="0.22" />
       </map>
     </option>
   </component>

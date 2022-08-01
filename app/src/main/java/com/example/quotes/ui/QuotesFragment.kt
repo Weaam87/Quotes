@@ -30,6 +30,7 @@ class QuotesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
+        binding.executePendingBindings()
     }
 
     /**
