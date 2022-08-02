@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.quotes.R
 import com.example.quotes.databinding.FragmentStartBinding
@@ -40,6 +39,7 @@ class StartFragment : Fragment() {
             val stringInTextField = binding.chooseNumberEditText.text.toString()
             val userIndex = stringInTextField.toIntOrNull()
             if (userIndex != null) {
+                binding.chooseNumberEditText.text?.clear()
                 if (userIndex > 100 || userIndex == 0) {
                     Toast.makeText(context, "Choose Number Between 1 and 100", Toast.LENGTH_SHORT)
                         .show()

@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.quotes.data.QuotesData
 import com.example.quotes.network.QuotesApi
 import kotlinx.coroutines.launch
-import kotlin.properties.Delegates
 
 //Add an enum to represent all the available statuses
 enum class QuotesApiStatus { LOADING, ERROR, DONE }
