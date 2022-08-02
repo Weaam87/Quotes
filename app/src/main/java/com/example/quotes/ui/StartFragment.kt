@@ -52,7 +52,7 @@ class StartFragment : Fragment() {
             }
         }
         binding.getRandomQuote.setOnClickListener {
-            val randomIndex = (0..99).random()
+            val randomIndex = (0..99).shuffled().random()
             viewModel.getIndex(randomIndex)
             findNavController().navigate(R.id.action_startFragment_to_quotes)
 
