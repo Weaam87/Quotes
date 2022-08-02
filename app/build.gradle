@@ -11,6 +11,7 @@ android {
         applicationId "com.example.quotes"
         minSdk 19
         targetSdk 32
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
 
