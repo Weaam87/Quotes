@@ -17,7 +17,7 @@ private val retrofit = Retrofit.Builder().addConverterFactory(MoshiConverterFact
     .create(moshi)).baseUrl(BASE_URL).build()
 
 interface QuotesApiService {
-    @GET("/b/MZ5D")
+    @GET("/b/2QN9")
     suspend fun getQuotes() : List<QuotesData>
 }
 

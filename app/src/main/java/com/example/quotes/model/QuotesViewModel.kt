@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.quotes.data.QuotesData
 import com.example.quotes.network.QuotesApi
 import kotlinx.coroutines.launch
+import kotlin.properties.Delegates
 
 //Add an enum to represent all the available statuses
 enum class QuotesApiStatus { LOADING, ERROR, DONE }
@@ -25,17 +26,17 @@ class QuotesViewModel : ViewModel() {
     private val _name = MutableLiveData<QuotesData?>()
     val name: LiveData<QuotesData?> = _name
 
-    init {
-        getQuotesDetails()
+    fun getIndex(index : Int ) {
+        getQuotesDetails(index)
     }
 
-    private fun getQuotesDetails() {
+     private fun getQuotesDetails(index : Int) {
         viewModelScope.launch {
             _status.value = QuotesApiStatus.LOADING
             try {
-                _photo.value = QuotesApi.retrofitService.getQuotes()[0]
-                _quote.value = QuotesApi.retrofitService.getQuotes()[0]
-                _name.value = QuotesApi.retrofitService.getQuotes()[0]
+                _photo.value = QuotesApi.retrofitService.getQuotes()[index]
+                _quote.value = QuotesApi.retrofitService.getQuotes()[index]
+                _name.value = QuotesApi.retrofitService.getQuotes()[index]
                 _status.value = QuotesApiStatus.DONE
             } catch (e: Exception) {
                 _status.value = QuotesApiStatus.ERROR

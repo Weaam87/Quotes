@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">Quotes</string>
-
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="choose_number_hint">1 to 100</string>
+    <string name="get_quote_by_number">Get the quote depending on your number</string>
+    <string name="get_random_quote">Get Random quote</string>
+    <string name="or">Or</string>
+    <string name="start_fragment">Home</string>
+    <string name="choose_number_text">Choose Your Number</string>
 </resources>

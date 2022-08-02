@@ -47,10 +47,6 @@
                 <TextView
                     android:id="@+id/quote"
                     style="@style/Widget.Quotes.TextView.quote"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
                     android:padding="8dp"
                     android:text="@{viewModel.quote.quote}"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -63,8 +59,6 @@
             <TextView
                 android:id="@+id/name"
                 style="@style/Widget.Quotes.TextView.name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="8dp"
                 android:text="@{viewModel.name.name}"

@@ -5,13 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.example.quotes.databinding.FragmentQuotesBinding
 import com.example.quotes.model.QuotesViewModel
 
 class QuotesFragment : Fragment() {
 
-    private val viewModel: QuotesViewModel by viewModels()
+    private val viewModel: QuotesViewModel by activityViewModels()
 
     private var _binding: FragmentQuotesBinding? = null
 
