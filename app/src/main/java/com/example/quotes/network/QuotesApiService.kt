@@ -11,8 +11,10 @@ import retrofit2.http.GET
 private const val BASE_URL =
     "https://jsonkeeper.com"
 
+//Create a Moshi object
 private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 
+//Create a Retrofit object
 private val retrofit = Retrofit.Builder().addConverterFactory(MoshiConverterFactory
     .create(moshi)).baseUrl(BASE_URL).build()
 
