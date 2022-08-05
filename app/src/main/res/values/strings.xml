@@ -6,4 +6,5 @@
     <string name="or">Or</string>
     <string name="start_fragment">Home</string>
     <string name="choose_number_text">Choose Your Number</string>
+    <string name="change_mode">Change Mode</string>
 </resources>
