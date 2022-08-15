@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -58,4 +59,6 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
     // Coil
     implementation "io.coil-kt:coil:1.1.1"
+
+    implementation "androidx.slidingpanelayout:slidingpanelayout:1.2.0"
 }
