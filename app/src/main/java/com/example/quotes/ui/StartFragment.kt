@@ -1,9 +1,11 @@
 package com.example.quotes.ui
 
 
-import android.app.Activity
+import android.app.*
 import android.content.Context
 import android.content.res.Configuration
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,8 +17,11 @@ import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.slidingpanelayout.widget.SlidingPaneLayout
+import com.example.quotes.R
 import com.example.quotes.databinding.FragmentStartBinding
 import com.example.quotes.model.QuotesViewModel
+import com.example.quotes.service.AlarmService
+import java.util.*
 
 
 class StartFragment : Fragment() {
@@ -27,12 +32,18 @@ class StartFragment : Fragment() {
 
     private val binding get() = _binding!!
 
+    private lateinit var alarmService: AlarmService
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentStartBinding.inflate(inflater, container, false)
+        createChannel(
+            getString(R.string.notification_channel_id),
+            getString(R.string.notification_channel_name)
+        )
         return binding.root
     }
 
@@ -40,14 +51,18 @@ class StartFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
+        alarmService = AlarmService(requireContext())
 
+        binding.setReminder.setOnClickListener {
+            setAlarm { alarmService.setRepetitiveAlarm(it) }
+        }
         /**
          * To see the callback in action, register the callback using the dispatcher,
          * "OnBackPressedDispatcher". P 586
          */
         val slidingPaneLayout = binding.slidingPaneLayout
 
-        // Connect the SlidingPaneLayout to the system back button.
+        // Connect the SlidingPaneLayout to the system back cancel_reminder.
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             QuotesOnBackPressedCallback(slidingPaneLayout)
@@ -87,6 +102,46 @@ class StartFragment : Fragment() {
         }
     }
 
+    private fun setAlarm(callback: (Long) -> Unit) {
+        Calendar.getInstance().apply {
+            this.set(Calendar.SECOND, 0)
+            this.set(Calendar.MILLISECOND, 0)
+            TimePickerDialog(
+                requireContext(),
+                0,
+                { _, hour, minute ->
+                    this.set(Calendar.HOUR_OF_DAY, hour)
+                    this.set(Calendar.MINUTE, minute)
+                    callback(this.timeInMillis)
+                    Toast.makeText(context, "Quotes reminder is set", Toast.LENGTH_SHORT).show()
+                },
+                this.get(Calendar.HOUR_OF_DAY),
+                this.get(Calendar.MINUTE),
+                false
+            ).show()
+        }
+    }
+
+    private fun createChannel(channelId: String, channelName: String) {
+        // create a channel
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationChannel = NotificationChannel(
+                channelId,
+                channelName,
+                NotificationManager.IMPORTANCE_HIGH
+            )
+
+            notificationChannel.enableLights(true)
+            notificationChannel.lightColor = Color.BLUE
+            notificationChannel.description = "Time for new quote"
+
+            val notificationManager = requireActivity().getSystemService(
+                NotificationManager::class.java
+            )
+            notificationManager.createNotificationChannel(notificationChannel)
+        }
+    }
+
     //check whether the user is using dark mode or not
     private fun isUsingNightMode(): Boolean {
         return when (resources.configuration.uiMode and
@@ -103,7 +158,8 @@ class StartFragment : Fragment() {
     }
 
     private fun Context.hideKeyboard(view: View) {
-        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        val inputMethodManager =
+            getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 

@@ -7,4 +7,8 @@
     <string name="start_fragment">Home</string>
     <string name="choose_number_text">Choose Your Number</string>
     <string name="change_mode">Change Mode</string>
+    <string name="notification_channel_id">quote_channel</string>
+    <string name="notification_title">Quote Time</string>
+    <string name="notification_channel_name">Quotes Reminder</string>
+    <string name="set_daily_reminder">Set daily reminder</string>
 </resources>

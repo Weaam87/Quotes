@@ -105,12 +105,32 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="32dp"
                     android:minHeight="48dp"
                     android:text="@string/change_mode"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/get_random_quote" />
+                    app:layout_constraintTop_toBottomOf="@+id/reminder_icon" />
+
+                <Button
+                    android:id="@+id/set_reminder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/set_daily_reminder"
+                    app:layout_constraintBottom_toBottomOf="@+id/reminder_icon"
+                    app:layout_constraintStart_toEndOf="@+id/reminder_icon"
+                    app:layout_constraintTop_toTopOf="@+id/reminder_icon" />
+
+                <ImageView
+                    android:id="@+id/reminder_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="32dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/get_random_quote"
+                    app:srcCompat="@drawable/ic_alarm_24" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
