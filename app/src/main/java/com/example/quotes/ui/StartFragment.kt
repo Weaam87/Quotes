@@ -113,7 +113,7 @@ class StartFragment : Fragment() {
                     this.set(Calendar.HOUR_OF_DAY, hour)
                     this.set(Calendar.MINUTE, minute)
                     callback(this.timeInMillis)
-                    Toast.makeText(context, "Quotes reminder is set", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Quotes reminder is set for $hour:$minute", Toast.LENGTH_LONG).show()
                 },
                 this.get(Calendar.HOUR_OF_DAY),
                 this.get(Calendar.MINUTE),
