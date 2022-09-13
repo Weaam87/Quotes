@@ -109,8 +109,8 @@
                     android:minHeight="48dp"
                     android:text="@string/change_mode"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/reminder_icon" />
+                    app:layout_constraintStart_toEndOf="@+id/mode_icon"
+                    app:layout_constraintTop_toBottomOf="@+id/check_reminder" />
 
                 <Button
                     android:id="@+id/set_reminder"
@@ -131,6 +131,36 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/get_random_quote"
                     app:srcCompat="@drawable/ic_alarm_24" />
+
+                <Button
+                    android:id="@+id/check_reminder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/check_reminder"
+                    app:layout_constraintBottom_toBottomOf="@+id/check_icon"
+                    app:layout_constraintStart_toEndOf="@+id/check_icon"
+                    app:layout_constraintTop_toTopOf="@+id/check_icon" />
+
+                <ImageView
+                    android:id="@+id/mode_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/change_mode"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/change_mode"
+                    app:srcCompat="@drawable/ic_baseline_model_training_24" />
+
+                <ImageView
+                    android:id="@+id/check_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="32dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/reminder_icon"
+                    app:srcCompat="@drawable/ic_baseline_content_paste_search_24" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

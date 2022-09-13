@@ -15,12 +15,17 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.lifecycleScope
 import androidx.slidingpanelayout.widget.SlidingPaneLayout
 import com.example.quotes.R
+import com.example.quotes.data.TimeDataStore
 import com.example.quotes.databinding.FragmentStartBinding
 import com.example.quotes.model.QuotesViewModel
 import com.example.quotes.service.AlarmService
+import kotlinx.coroutines.launch
 import java.util.*
 
 
@@ -33,6 +38,10 @@ class StartFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var alarmService: AlarmService
+
+    private lateinit var timeDataStore: TimeDataStore
+
+    private var selectedTime = "first_run"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,9 +61,22 @@ class StartFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
         alarmService = AlarmService(requireContext())
+        timeDataStore = TimeDataStore(requireContext())
+        timeDataStore.preferenceFlow.asLiveData().observe(viewLifecycleOwner) { time ->
+            selectedTime = time
+        }
 
         binding.setReminder.setOnClickListener {
             setAlarm { alarmService.setRepetitiveAlarm(it) }
+        }
+
+        binding.checkReminder.setOnClickListener {
+            if(selectedTime == "first_run") {
+                Toast.makeText(context, "No Reminder set yet", Toast.LENGTH_LONG).show()
+            }
+            else {
+                Toast.makeText(context, "Quotes reminder is set for $selectedTime", Toast.LENGTH_LONG).show()
+            }
         }
         /**
          * To see the callback in action, register the callback using the dispatcher,
@@ -114,6 +136,12 @@ class StartFragment : Fragment() {
                     this.set(Calendar.MINUTE, minute)
                     callback(this.timeInMillis)
                     Toast.makeText(context, "Quotes reminder is set for $hour:$minute", Toast.LENGTH_LONG).show()
+                    selectedTime = "$hour:$minute"
+
+                    // Write the (selectedTime) to the "DataStore"
+                    lifecycleScope.launch {
+                        timeDataStore.saveTimeToPreferencesStore(selectedTime,requireContext())
+                    }
                 },
                 this.get(Calendar.HOUR_OF_DAY),
                 this.get(Calendar.MINUTE),

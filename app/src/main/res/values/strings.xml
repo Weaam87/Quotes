@@ -11,4 +11,5 @@
     <string name="notification_title">Quote Time</string>
     <string name="notification_channel_name">Quotes Reminder</string>
     <string name="set_daily_reminder">Set daily reminder</string>
+    <string name="check_reminder">check reminder</string>
 </resources>
