@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.quotes.model.QuotesViewModel" />
+            type="com.dailyQuoteApp.quotes.model.QuotesViewModel" />
     </data>
 
     <ScrollView

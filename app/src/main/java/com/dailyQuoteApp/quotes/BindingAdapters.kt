@@ -1,11 +1,11 @@
-package com.example.quotes
+package com.dailyQuoteApp.quotes
 
 import android.view.View
 import android.widget.ImageView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import coil.load
-import com.example.quotes.model.QuotesApiStatus
+import com.dailyQuoteApp.quotes.model.QuotesApiStatus
 
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {

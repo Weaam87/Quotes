@@ -1,4 +1,4 @@
-package com.example.quotes.util
+package com.dailyQuoteApp.quotes.util
 
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -8,9 +8,9 @@ import android.graphics.BitmapFactory
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
-import com.example.quotes.MainActivity
-import com.example.quotes.R
-import com.example.quotes.util.Constants.NOTIFICATION_ID
+import com.dailyQuoteApp.quotes.MainActivity
+import com.dailyQuoteApp.quotes.R
+import com.dailyQuoteApp.quotes.util.Constants.NOTIFICATION_ID
 
 @RequiresApi(Build.VERSION_CODES.M)
 fun NotificationManager.sendNotification(applicationContext: Context, messageBody: String) {

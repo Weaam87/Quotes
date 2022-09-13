@@ -1,13 +1,13 @@
-package com.example.quotes.service
+package com.dailyQuoteApp.quotes.service
 
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import com.example.quotes.receiver.AlarmReceiver
-import com.example.quotes.util.Constants
-import com.example.quotes.util.Constants.REQUEST_CODE
+import com.dailyQuoteApp.quotes.receiver.AlarmReceiver
+import com.dailyQuoteApp.quotes.util.Constants
+import com.dailyQuoteApp.quotes.util.Constants.REQUEST_CODE
 
 
 class AlarmService(private val context: Context) {

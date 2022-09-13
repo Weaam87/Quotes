@@ -1,4 +1,4 @@
-package com.example.quotes.ui
+package com.dailyQuoteApp.quotes.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.example.quotes.databinding.FragmentQuotesBinding
-import com.example.quotes.model.QuotesViewModel
+import com.dailyQuoteApp.quotes.databinding.FragmentQuotesBinding
+import com.dailyQuoteApp.quotes.model.QuotesViewModel
 
 class QuotesFragment : Fragment() {
 

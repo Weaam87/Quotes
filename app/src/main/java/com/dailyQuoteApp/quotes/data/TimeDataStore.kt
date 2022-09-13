@@ -1,4 +1,4 @@
-package com.example.quotes.data
+package com.dailyQuoteApp.quotes.data
 
 import android.content.Context
 import androidx.datastore.core.DataStore

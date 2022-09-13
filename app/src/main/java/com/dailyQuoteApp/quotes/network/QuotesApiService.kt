@@ -1,6 +1,6 @@
-package com.example.quotes.network
+package com.dailyQuoteApp.quotes.network
 
-import com.example.quotes.data.QuotesData
+import com.dailyQuoteApp.quotes.data.QuotesData
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit

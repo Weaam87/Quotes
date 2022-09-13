@@ -1,4 +1,4 @@
-package com.example.quotes.util
+package com.dailyQuoteApp.quotes.util
 
 object Constants {
     const val EXTRA_EXACT_ALARM_TIME = "EXTRA_EXACT_ALARM_TIME"

@@ -1,4 +1,4 @@
-package com.example.quotes.ui
+package com.dailyQuoteApp.quotes.ui
 
 
 import android.app.*
@@ -15,16 +15,15 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.slidingpanelayout.widget.SlidingPaneLayout
-import com.example.quotes.R
-import com.example.quotes.data.TimeDataStore
-import com.example.quotes.databinding.FragmentStartBinding
-import com.example.quotes.model.QuotesViewModel
-import com.example.quotes.service.AlarmService
+import com.dailyQuoteApp.quotes.R
+import com.dailyQuoteApp.quotes.data.TimeDataStore
+import com.dailyQuoteApp.quotes.databinding.FragmentStartBinding
+import com.dailyQuoteApp.quotes.model.QuotesViewModel
+import com.dailyQuoteApp.quotes.service.AlarmService
 import kotlinx.coroutines.launch
 import java.util.*
 

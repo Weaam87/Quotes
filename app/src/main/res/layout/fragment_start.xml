@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.quotes.model.QuotesViewModel" />
+            type="com.dailyQuoteApp.quotes.model.QuotesViewModel" />
     </data>
 
     <androidx.slidingpanelayout.widget.SlidingPaneLayout
@@ -167,7 +167,7 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/detail_container"
-            android:name="com.example.quotes.ui.QuotesFragment"
+            android:name="com.dailyQuoteApp.quotes.ui.QuotesFragment"
             android:layout_width="500dp"
             android:layout_weight="1"
             android:layout_height="match_parent" />

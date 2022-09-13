@@ -1,4 +1,4 @@
-package com.example.quotes
+package com.dailyQuoteApp.quotes
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
