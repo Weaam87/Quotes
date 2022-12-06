@@ -46,7 +46,7 @@ class StartFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentStartBinding.inflate(inflater, container, false)
         createChannel(
             getString(R.string.notification_channel_id),
@@ -83,7 +83,7 @@ class StartFragment : Fragment() {
          */
         val slidingPaneLayout = binding.slidingPaneLayout
 
-        // Connect the SlidingPaneLayout to the system back cancel_reminder.
+        // Connect the SlidingPaneLayout to the system back button.
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             QuotesOnBackPressedCallback(slidingPaneLayout)
