@@ -1,4 +1,4 @@
-# You can choose a number from one to 100 to get an inspirational quotes that related to your number , otherwise , you can just get a random inspirational quotes without choosing a number.
+# "You can choose a number between one and 100 to receive an inspirational quote that relates to your choice, or you can simply receive a random inspirational quote without making a selection."
 
 # In this app , I tried to show my skills in the following subjects :
 
