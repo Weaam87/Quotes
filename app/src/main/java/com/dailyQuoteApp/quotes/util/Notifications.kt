@@ -4,6 +4,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -34,7 +35,7 @@ fun NotificationManager.sendNotification(applicationContext: Context, messageBod
 
     val bigPicStyle = NotificationCompat.BigPictureStyle().
     bigPicture(quoteImage).
-    bigLargeIcon(null)
+    bigLargeIcon(null as Bitmap?)  // Specify Bitmap?
 
     // Build the notification
     val builder = NotificationCompat.Builder(
