@@ -1,4 +1,4 @@
-package com.example.quotes.ui
+package com.dailyQuoteApp.quotes.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.dailyQuoteApp.quotes.model.QuotesViewModel
 import com.example.quotes.databinding.FragmentQuotesBinding
-import com.example.quotes.model.QuotesViewModel
 
 class QuotesFragment : Fragment() {
 
@@ -21,7 +21,7 @@ class QuotesFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentQuotesBinding.inflate(inflater, container, false)
         return binding.root
     }

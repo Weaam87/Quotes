@@ -1,4 +1,4 @@
-package com.example.quotes
+package com.dailyQuoteApp.quotes
 
 import org.junit.Test
 

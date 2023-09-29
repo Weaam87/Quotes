@@ -1,4 +1,4 @@
-package com.example.quotes.ui
+package com.dailyQuoteApp.quotes.ui
 
 
 import android.app.Activity
@@ -11,12 +11,14 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatDelegate.*
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
+import androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.slidingpanelayout.widget.SlidingPaneLayout
+import com.dailyQuoteApp.quotes.model.QuotesViewModel
 import com.example.quotes.databinding.FragmentStartBinding
-import com.example.quotes.model.QuotesViewModel
 
 
 class StartFragment : Fragment() {
@@ -31,7 +33,7 @@ class StartFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentStartBinding.inflate(inflater, container, false)
         return binding.root
     }

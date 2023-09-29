@@ -1,10 +1,11 @@
-package com.example.quotes
+package com.dailyQuoteApp.quotes
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.example.quotes.R
 
 class MainActivity : AppCompatActivity() {
 

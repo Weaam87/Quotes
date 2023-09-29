@@ -1,11 +1,11 @@
-package com.example.quotes.model
+package com.dailyQuoteApp.quotes.model
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.quotes.data.QuotesData
-import com.example.quotes.network.QuotesApi
+import com.dailyQuoteApp.quotes.data.QuotesData
+import com.dailyQuoteApp.quotes.network.QuotesApi
 import kotlinx.coroutines.launch
 
 //Add an enum to represent all the available statuses

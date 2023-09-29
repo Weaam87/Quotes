@@ -9,7 +9,7 @@ android {
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.quotes"
+        applicationId "com.dailyQuoteApp.quotes"
         minSdk 19
         targetSdk 34
         multiDexEnabled true
