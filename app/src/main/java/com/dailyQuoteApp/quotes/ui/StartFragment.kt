@@ -79,13 +79,32 @@ class StartFragment : Fragment() {
             binding.slidingPaneLayout.openPane()
             hideKeyboard()
         }
-        // change Mode
+        // Retrieve the user's preference for checkbox state
+        val sharedPreferences =
+            requireContext().getSharedPreferences("ModePrefs", Context.MODE_PRIVATE)
+        val isCheckboxChecked =
+            sharedPreferences.getBoolean("checkbox_state", false) // Default to false if not found
+
+        // Set the checkbox state based on the saved checkbox state
+        binding.changeMode.isChecked = isCheckboxChecked
+
+        // Set the click listener for changing the theme mode and saving checkbox state
         binding.changeMode.setOnClickListener {
-            if (isUsingNightMode()) {
+            val newMode = if (isUsingNightMode()) {
                 setDefaultNightMode(MODE_NIGHT_NO)
+                MODE_NIGHT_NO
             } else {
                 setDefaultNightMode(MODE_NIGHT_YES)
+                MODE_NIGHT_YES
             }
+
+            // Save the user's mode preference
+            val sharedPreferencesMode =
+                requireContext().getSharedPreferences("ModePrefs", Context.MODE_PRIVATE)
+            sharedPreferencesMode.edit().putInt("theme_mode", newMode).apply()
+            // Save the checkbox state
+            sharedPreferences.edit().putBoolean("checkbox_state", binding.changeMode.isChecked)
+                .apply()
         }
     }
 
@@ -105,7 +124,8 @@ class StartFragment : Fragment() {
     }
 
     private fun Context.hideKeyboard(view: View) {
-        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        val inputMethodManager =
+            getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
