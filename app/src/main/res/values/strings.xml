@@ -3,8 +3,17 @@
     <string name="choose_number_hint">1 to 100</string>
     <string name="get_quote_by_number">Get the quote depending on your number</string>
     <string name="get_random_quote">Get Random quote</string>
+    <string name="set_daily_reminder">Set daily reminder</string>
     <string name="or">Or</string>
     <string name="start_fragment">Home</string>
     <string name="choose_number_text">Choose Your Number</string>
+    <string name="notification_title">Daily Quote Reminder</string>
+    <string name="notification_messageBody">Don\'t forget to get today\'s quote!</string>
+    <string name="notification_channel_id">quote_channel</string>
+    <string name="notification_permission_title">Notification Permission Required</string>
+    <string name="notification_permission_message">To set a daily reminder, please grant notification permission.</string>
+    <string name="grant_permission">Grant Permission</string>
+    <string name="cancel">Cancel</string>
+    <string name="permission_request_canceled">Permission request canceled.</string>
     <string name="change_mode">Change Mode</string>
 </resources>
