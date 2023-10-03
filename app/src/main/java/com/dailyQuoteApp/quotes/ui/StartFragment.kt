@@ -45,8 +45,9 @@ class StartFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-    // Set the alarm interval to 24 hours
-    private val ALARM_INTERVAL_MILLIS = 24 * 60 * 60 * 1000L
+    // For test only , Set the alarm interval to 5 minutes
+    private val ALARM_INTERVAL_MILLIS = 5 * 60 * 1000L
+
 
     private lateinit var alarmService: AlarmService
 
@@ -138,7 +139,7 @@ class StartFragment : Fragment() {
 
         alarmService = AlarmService(requireContext())
         binding.setReminder.setOnClickListener {
-            showTimePickerDialog { alarmService.setRepetitiveAlarm(it) }
+            showTimePickerDialog { alarmService.setAlarm(it) }
         }
     }
 
@@ -192,32 +193,52 @@ class StartFragment : Fragment() {
             requestNotificationPermission()
         } else {
             // Permission is granted, proceed with showing the TimePickerDialog
-            Calendar.getInstance().apply {
-                this.set(Calendar.SECOND, 0)
-                this.set(Calendar.MILLISECOND, 0)
-                TimePickerDialog(
-                    context,
-                    0,
-                    { _, hour, minute ->
-                        this.set(Calendar.HOUR_OF_DAY, hour)
-                        this.set(Calendar.MINUTE, minute)
-                        callback(this.timeInMillis)
-                        scheduleDailyAlarm(context, hour, minute)
-                        Toast.makeText(
-                            context,
-                            "Daily reminder set for $hour:$minute",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    },
-                    this.get(Calendar.HOUR_OF_DAY),
-                    this.get(Calendar.MINUTE),
-                    false
-                ).show()
-            }
+            val currentTime = Calendar.getInstance()
+            val initialHourOfDay = currentTime.get(Calendar.HOUR_OF_DAY)
+            val initialMinute = currentTime.get(Calendar.MINUTE)
+
+            val timePickerDialog = TimePickerDialog(
+                context,
+                { _, hour, minute ->
+                    val selectedTime = Calendar.getInstance()
+                    selectedTime.set(Calendar.HOUR_OF_DAY, hour)
+                    selectedTime.set(Calendar.MINUTE, minute)
+                    selectedTime.set(Calendar.SECOND, 0)
+                    selectedTime.set(Calendar.MILLISECOND, 0)
+
+                    val selectedTimeInMillis = selectedTime.timeInMillis
+
+                    // Store the selected time in SharedPreferences
+                    val sharedPreferences = context.getSharedPreferences(
+                        "MyAppPrefs",
+                        Context.MODE_PRIVATE
+                    )
+                    sharedPreferences.edit()
+                        .putLong("dailyReminderTime", selectedTimeInMillis)
+                        .apply()
+
+                    callback(selectedTimeInMillis)
+
+                    // Schedule the daily alarm using the selected time
+                    setRepetitiveAlarm(context, hour, minute)
+
+                    Toast.makeText(
+                        context,
+                        "Daily reminder set for $hour:$minute",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                },
+                initialHourOfDay,
+                initialMinute,
+                false
+            )
+
+            timePickerDialog.show()
         }
     }
 
-    private fun scheduleDailyAlarm(context: Context, hour: Int, minute: Int) {
+
+    private fun setRepetitiveAlarm(context: Context, hour: Int, minute: Int) {
         val alarmManager: AlarmManager? =
             context.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
 
@@ -249,16 +270,6 @@ class StartFragment : Fragment() {
             ALARM_INTERVAL_MILLIS,
             pendingIntent // Use the PendingIntent with the action set
         )
-    }
-
-    private fun cancelAlarm(context: Context) {
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val alarmIntent = Intent(context, AlarmReceiver::class.java).let { intent ->
-            PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
-        }
-
-        // Cancel the alarm
-        alarmManager.cancel(alarmIntent)
     }
 
 

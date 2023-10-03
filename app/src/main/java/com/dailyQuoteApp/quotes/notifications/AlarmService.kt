@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.provider.Settings
-import androidx.annotation.RequiresApi
 
 
 class AlarmService(private val context: Context) {
@@ -16,7 +15,7 @@ class AlarmService(private val context: Context) {
         context.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
 
     @SuppressLint("BatteryLife")
-    private fun setAlarm(timeInMillis: Long, pendingIntent: PendingIntent) {
+    fun setAlarm(timeInMillis: Long) {
         alarmManager?.let {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -25,7 +24,11 @@ class AlarmService(private val context: Context) {
                         alarmManager.setExactAndAllowWhileIdle(
                             AlarmManager.RTC_WAKEUP,
                             timeInMillis,
-                            pendingIntent
+                            getPendingIntent(
+                                getIntent().apply {
+                                    action = "notification"
+                                }
+                            )
                         )
                     } else {
                         val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
@@ -36,7 +39,11 @@ class AlarmService(private val context: Context) {
                     alarmManager.setExactAndAllowWhileIdle(
                         AlarmManager.RTC_WAKEUP,
                         timeInMillis,
-                        pendingIntent
+                        getPendingIntent(
+                            getIntent().apply {
+                                action = "notification"
+                            }
+                        )
                     )
                 }
             } else {
@@ -44,13 +51,15 @@ class AlarmService(private val context: Context) {
                 alarmManager.setExact(
                     AlarmManager.RTC_WAKEUP,
                     timeInMillis,
-                    pendingIntent
+                    getPendingIntent(
+                        getIntent().apply {
+                            action = "notification"
+                        }
+                    )
                 )
             }
         }
     }
-
-
 
     private fun getPendingIntent(intent: Intent) =
         PendingIntent.getBroadcast(
@@ -61,18 +70,4 @@ class AlarmService(private val context: Context) {
         )
 
     private fun getIntent() = Intent(context, AlarmReceiver::class.java)
-
-    //1 Day
-
-
-    fun setRepetitiveAlarm(timeInMillis: Long) {
-        setAlarm(
-            timeInMillis,
-            getPendingIntent(
-                getIntent().apply {
-                    action = "notification"
-                }
-            )
-        )
-    }
 }
