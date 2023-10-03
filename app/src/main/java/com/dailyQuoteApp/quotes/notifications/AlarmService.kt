@@ -15,15 +15,29 @@ class AlarmService(private val context: Context) {
         context.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
 
     @SuppressLint("BatteryLife")
-    fun setAlarm(timeInMillis: Long) {
+    fun setRepetitiveAlarm(timeInMillis: Long) {
         alarmManager?.let {
+            // Calculate the time for the next alarm, which will be 24 hours from the current time
+            val repeatInterval = 24 * 60 * 60 * 1000L // 24 hours in milliseconds
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                    // Use canScheduleExactAlarms for Android 12 (API level 31) and higher
                     if (alarmManager.canScheduleExactAlarms()) {
                         alarmManager.setExactAndAllowWhileIdle(
                             AlarmManager.RTC_WAKEUP,
                             timeInMillis,
+                            getPendingIntent(
+                                getIntent().apply {
+                                    action = "notification"
+                                }
+                            )
+                        )
+
+                        // Schedule the alarm to repeat every 24 hours
+                        alarmManager.setRepeating(
+                            AlarmManager.RTC_WAKEUP,
+                            timeInMillis + repeatInterval,
+                            repeatInterval,
                             getPendingIntent(
                                 getIntent().apply {
                                     action = "notification"
@@ -35,7 +49,6 @@ class AlarmService(private val context: Context) {
                         context.startActivity(intent)
                     }
                 } else {
-                    // Use setExactAndAllowWhileIdle for Android 8.0 (API level 26) to Android 11 (API level 30)
                     alarmManager.setExactAndAllowWhileIdle(
                         AlarmManager.RTC_WAKEUP,
                         timeInMillis,
@@ -45,9 +58,20 @@ class AlarmService(private val context: Context) {
                             }
                         )
                     )
+
+                    // Schedule the alarm to repeat every 24 hours
+                    alarmManager.setRepeating(
+                        AlarmManager.RTC_WAKEUP,
+                        timeInMillis + repeatInterval,
+                        repeatInterval,
+                        getPendingIntent(
+                            getIntent().apply {
+                                action = "notification"
+                            }
+                        )
+                    )
                 }
             } else {
-                // Use setExact for Android versions below 8.0 (API level 26)
                 alarmManager.setExact(
                     AlarmManager.RTC_WAKEUP,
                     timeInMillis,
@@ -57,9 +81,22 @@ class AlarmService(private val context: Context) {
                         }
                     )
                 )
+
+                // Schedule the alarm to repeat every 24 hours
+                alarmManager.setRepeating(
+                    AlarmManager.RTC_WAKEUP,
+                    timeInMillis + repeatInterval,
+                    repeatInterval,
+                    getPendingIntent(
+                        getIntent().apply {
+                            action = "notification"
+                        }
+                    )
+                )
             }
         }
     }
+
 
     private fun getPendingIntent(intent: Intent) =
         PendingIntent.getBroadcast(

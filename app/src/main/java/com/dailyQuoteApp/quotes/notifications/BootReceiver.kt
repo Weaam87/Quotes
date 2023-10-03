@@ -26,7 +26,7 @@ class BootReceiver : BroadcastReceiver() {
                 val alarmService = AlarmService(context)
 
                 // Set the repetitive alarm using the AlarmService
-                alarmService.setAlarm(dailyReminderTimeInMillis)
+                alarmService.setRepetitiveAlarm(dailyReminderTimeInMillis)
             }
         }
     }

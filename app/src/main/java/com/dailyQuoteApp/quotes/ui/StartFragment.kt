@@ -45,8 +45,6 @@ class StartFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-    // For test only , Set the alarm interval to 5 minutes
-    private val ALARM_INTERVAL_MILLIS = 5 * 60 * 1000L
 
 
     private lateinit var alarmService: AlarmService
@@ -139,7 +137,7 @@ class StartFragment : Fragment() {
 
         alarmService = AlarmService(requireContext())
         binding.setReminder.setOnClickListener {
-            showTimePickerDialog { alarmService.setAlarm(it) }
+            showTimePickerDialog { alarmService.setRepetitiveAlarm(it) }
         }
     }
 
@@ -220,7 +218,7 @@ class StartFragment : Fragment() {
                     callback(selectedTimeInMillis)
 
                     // Schedule the daily alarm using the selected time
-                    setRepetitiveAlarm(context, hour, minute)
+                    setAlarm(context, hour, minute)
 
                     Toast.makeText(
                         context,
@@ -238,12 +236,11 @@ class StartFragment : Fragment() {
     }
 
 
-    private fun setRepetitiveAlarm(context: Context, hour: Int, minute: Int) {
-        val alarmManager: AlarmManager? =
-            context.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
+    private fun setAlarm(context: Context, hour: Int, minute: Int) {
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         val alarmIntent = Intent(context, AlarmReceiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(
+        val alarmPendingIntent = PendingIntent.getBroadcast(
             context,
             0,
             alarmIntent,
@@ -263,14 +260,14 @@ class StartFragment : Fragment() {
             calendar.add(Calendar.DAY_OF_YEAR, 1)
         }
 
-        // Set the alarm to repeat daily
-        alarmManager?.setRepeating(
+        // Set the alarm
+        alarmManager.set(
             AlarmManager.RTC_WAKEUP,
             calendar.timeInMillis,
-            ALARM_INTERVAL_MILLIS,
-            pendingIntent // Use the PendingIntent with the action set
+            alarmPendingIntent
         )
     }
+
 
 
     private fun isNotificationPermissionGranted(context: Context): Boolean {
