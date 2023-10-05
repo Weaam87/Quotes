@@ -14,11 +14,20 @@ class AlarmService(private val context: Context) {
     private val alarmManager: AlarmManager? =
         context.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
 
+    fun cancelAlarm() {
+        val intent = getIntent().apply {
+            action = "notification"
+        }
+        val pendingIntent = getPendingIntent(intent)
+        alarmManager?.cancel(pendingIntent)
+    }
+
     @SuppressLint("BatteryLife")
-    fun setRepetitiveAlarm(timeInMillis: Long) {
+    fun setRepetitiveAlarm(timeInMillis: Long): Boolean {
         alarmManager?.let {
             // Calculate the time for the next alarm, which will be 24 hours from the current time
-            val repeatInterval = 24 * 60 * 60 * 1000L // 24 hours in milliseconds
+            val repeatInterval = 1 * 60 * 1000L // 1 minutes in milliseconds
+
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -95,6 +104,8 @@ class AlarmService(private val context: Context) {
                 )
             }
         }
+        // Return true if the alarm was set successfully
+        return true
     }
 
 

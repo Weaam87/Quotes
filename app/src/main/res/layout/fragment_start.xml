@@ -92,17 +92,26 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider" />
 
-                <Button
+                <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/set_reminder"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
-                    android:text="@string/set_daily_reminder"
                     app:layout_constraintBottom_toBottomOf="@+id/get_random_quote"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/change_mode" />
+
+                <TextView
+                    android:id="@+id/switch_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="8dp"
+                    android:text="@string/set_daily_reminder"
+                    app:layout_constraintBottom_toBottomOf="@+id/set_reminder"
+                    app:layout_constraintStart_toEndOf="@+id/set_reminder"
+                    app:layout_constraintTop_toTopOf="@+id/set_reminder" />
 
                 <com.google.android.material.checkbox.MaterialCheckBox
                     android:id="@+id/change_mode"

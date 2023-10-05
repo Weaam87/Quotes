@@ -32,6 +32,7 @@ import androidx.slidingpanelayout.widget.SlidingPaneLayout
 import com.dailyQuoteApp.quotes.model.QuotesViewModel
 import com.dailyQuoteApp.quotes.notifications.AlarmReceiver
 import com.dailyQuoteApp.quotes.notifications.AlarmService
+import com.dailyQuoteApp.quotes.notifications.BootReceiver
 import com.example.quotes.R
 import com.example.quotes.databinding.FragmentStartBinding
 import java.util.Calendar
@@ -46,8 +47,10 @@ class StartFragment : Fragment() {
     private val binding get() = _binding!!
 
 
-
     private lateinit var alarmService: AlarmService
+
+    // Create an instance of BootReceiver
+    private val bootReceiver = BootReceiver()
 
 
     override fun onCreateView(
@@ -136,8 +139,55 @@ class StartFragment : Fragment() {
         }
 
         alarmService = AlarmService(requireContext())
-        binding.setReminder.setOnClickListener {
-            showTimePickerDialog { alarmService.setRepetitiveAlarm(it) }
+
+        // Retrieve the user's preference for the Switch state
+        val switchSharedPreferences =
+            requireContext().getSharedPreferences("SwitchPrefs", Context.MODE_PRIVATE)
+        val isSwitchChecked = switchSharedPreferences.getBoolean(
+            "switch_state",
+            false
+        )
+
+
+        // Set the Switch state based on the saved state
+        binding.setReminder.isChecked = isSwitchChecked
+
+        binding.setReminder.setOnCheckedChangeListener { _, isChecked ->
+            // Check for notification permission
+            if (isNotificationPermissionGranted(requireContext())) {
+                if (isChecked) {
+                    showTimePickerDialog { alarmTime ->
+                        if (alarmService.setRepetitiveAlarm(alarmTime)) {
+                            // Save the Switch state since the alarm is set
+                            switchSharedPreferences.edit().putBoolean("switch_state", true).apply()
+                        } else {
+                            // Display an error message or take appropriate action
+                            Toast.makeText(
+                                requireContext(),
+                                "Failed to set the alarm",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            // Uncheck the switch
+                            binding.setReminder.isChecked = false
+                        }
+                    }
+                } else {
+                    alarmService.cancelAlarm()
+                    bootReceiver.deleteBootReceiverSharedPreferences(requireContext())
+                    // Save the Switch state since the alarm is canceled
+                    switchSharedPreferences.edit().putBoolean("switch_state", false).apply()
+                    Toast.makeText(
+                        requireContext(),
+                        "Alarms and Notifications Canceled",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            } else {
+                // Request notification permission
+                requestNotificationPermission()
+                // Uncheck the switch
+                binding.setReminder.isChecked = false
+            }
         }
     }
 
@@ -244,7 +294,7 @@ class StartFragment : Fragment() {
             context,
             0,
             alarmIntent,
-            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+            PendingIntent.FLAG_IMMUTABLE
         )
 
         // Calculate the time for the first alarm (tomorrow at the selected hour and minute)
@@ -267,7 +317,6 @@ class StartFragment : Fragment() {
             alarmPendingIntent
         )
     }
-
 
 
     private fun isNotificationPermissionGranted(context: Context): Boolean {

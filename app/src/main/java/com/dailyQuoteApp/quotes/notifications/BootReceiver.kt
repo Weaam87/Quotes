@@ -30,4 +30,16 @@ class BootReceiver : BroadcastReceiver() {
             }
         }
     }
+
+    fun deleteBootReceiverSharedPreferences(context: Context) {
+        val sharedPreferences = context.getSharedPreferences(
+            "MyAppPrefs",
+            Context.MODE_PRIVATE
+        )
+
+        // Use an editor to remove the specific preference
+        val editor = sharedPreferences.edit()
+        editor.remove("dailyReminderTime")
+        editor.apply()
+    }
 }
