@@ -23,7 +23,7 @@ class AlarmService(private val context: Context) {
     }
 
     @SuppressLint("BatteryLife")
-    fun setRepetitiveAlarm(timeInMillis: Long): Boolean {
+    fun setRepetitiveAlarm(timeInMillis: Long) {
         alarmManager?.let {
             // Calculate the time for the next alarm, which will be 24 hours from the current time
             val repeatInterval = 1 * 60 * 1000L // 1 minutes in milliseconds
@@ -104,8 +104,6 @@ class AlarmService(private val context: Context) {
                 )
             }
         }
-        // Return true if the alarm was set successfully
-        return true
     }
 
 

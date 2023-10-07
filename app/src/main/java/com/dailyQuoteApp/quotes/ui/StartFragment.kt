@@ -9,6 +9,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.TimePickerDialog
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Color
@@ -112,7 +113,7 @@ class StartFragment : Fragment() {
         }
         // Retrieve the user's preference for checkbox state
         val sharedPreferences =
-            requireContext().getSharedPreferences("ModePrefs", Context.MODE_PRIVATE)
+            requireContext().getSharedPreferences("ModePrefs", MODE_PRIVATE)
         val isCheckboxChecked =
             sharedPreferences.getBoolean("checkbox_state", false) // Default to false if not found
 
@@ -131,7 +132,7 @@ class StartFragment : Fragment() {
 
             // Save the user's mode preference
             val sharedPreferencesMode =
-                requireContext().getSharedPreferences("ModePrefs", Context.MODE_PRIVATE)
+                requireContext().getSharedPreferences("ModePrefs", MODE_PRIVATE)
             sharedPreferencesMode.edit().putInt("theme_mode", newMode).apply()
             // Save the checkbox state
             sharedPreferences.edit().putBoolean("checkbox_state", binding.changeMode.isChecked)
@@ -142,7 +143,7 @@ class StartFragment : Fragment() {
 
         // Retrieve the user's preference for the Switch state
         val switchSharedPreferences =
-            requireContext().getSharedPreferences("SwitchPrefs", Context.MODE_PRIVATE)
+            requireContext().getSharedPreferences("SwitchPrefs", MODE_PRIVATE)
         val isSwitchChecked = switchSharedPreferences.getBoolean(
             "switch_state",
             false
@@ -152,30 +153,23 @@ class StartFragment : Fragment() {
         // Set the Switch state based on the saved state
         binding.setReminder.isChecked = isSwitchChecked
 
-        binding.setReminder.setOnCheckedChangeListener { _, isChecked ->
+        binding.setReminder.setOnClickListener {
             // Check for notification permission
             if (isNotificationPermissionGranted(requireContext())) {
-                if (isChecked) {
-                    showTimePickerDialog { alarmTime ->
-                        if (alarmService.setRepetitiveAlarm(alarmTime)) {
-                            // Save the Switch state since the alarm is set
-                            switchSharedPreferences.edit().putBoolean("switch_state", true).apply()
-                        } else {
-                            // Display an error message or take appropriate action
-                            Toast.makeText(
-                                requireContext(),
-                                "Failed to set the alarm",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            // Uncheck the switch
-                            binding.setReminder.isChecked = false
-                        }
+                if (!alarmIsSet()) {
+                    binding.setReminder.isChecked = alarmIsSet()
+                    showTimePickerDialog {
+                        binding.setReminder.isChecked = alarmIsSet()
+                        alarmService.setRepetitiveAlarm(it)
+                        // Save the Switch state since the alarm is set
+                        switchSharedPreferences.edit().putBoolean("switch_state", true).apply()
                     }
                 } else {
                     alarmService.cancelAlarm()
                     bootReceiver.deleteBootReceiverSharedPreferences(requireContext())
                     // Save the Switch state since the alarm is canceled
                     switchSharedPreferences.edit().putBoolean("switch_state", false).apply()
+                    binding.setReminder.isChecked = false
                     Toast.makeText(
                         requireContext(),
                         "Alarms and Notifications Canceled",
@@ -189,6 +183,16 @@ class StartFragment : Fragment() {
                 binding.setReminder.isChecked = false
             }
         }
+    }
+
+    private fun alarmIsSet(): Boolean {
+        val sharedPreferences = requireContext().getSharedPreferences(
+            "MyAppPrefs",
+            MODE_PRIVATE
+        )
+        val dailyReminderTime = sharedPreferences.getLong("dailyReminderTime", -1)
+
+        return dailyReminderTime != -1L // Return true if dailyReminderTime is not equal to -1
     }
 
     //check whether the user is using dark mode or not
@@ -259,7 +263,7 @@ class StartFragment : Fragment() {
                     // Store the selected time in SharedPreferences
                     val sharedPreferences = context.getSharedPreferences(
                         "MyAppPrefs",
-                        Context.MODE_PRIVATE
+                        MODE_PRIVATE
                     )
                     sharedPreferences.edit()
                         .putLong("dailyReminderTime", selectedTimeInMillis)
