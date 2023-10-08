@@ -111,13 +111,14 @@ class StartFragment : Fragment() {
             binding.slidingPaneLayout.openPane()
             hideKeyboard()
         }
-        // Retrieve the user's preference for checkbox state
-        val sharedPreferences =
-            requireContext().getSharedPreferences("ModePrefs", MODE_PRIVATE)
-        val isCheckboxChecked =
-            sharedPreferences.getBoolean("checkbox_state", false) // Default to false if not found
+        // Create a function to handle SharedPreferences operations for a given name
+        fun getSharedPreferences(name: String) =
+            requireContext().getSharedPreferences(name, MODE_PRIVATE)
 
-        // Set the checkbox state based on the saved checkbox state
+        // Retrieve the user's preference for checkbox state
+        val sharedPreferences = getSharedPreferences("ModePrefs")
+        // Default to false if not found
+        val isCheckboxChecked = sharedPreferences.getBoolean("checkbox_state", false)
         binding.changeMode.isChecked = isCheckboxChecked
 
         // Set the click listener for changing the theme mode and saving checkbox state
@@ -131,24 +132,18 @@ class StartFragment : Fragment() {
             }
 
             // Save the user's mode preference
-            val sharedPreferencesMode =
-                requireContext().getSharedPreferences("ModePrefs", MODE_PRIVATE)
-            sharedPreferencesMode.edit().putInt("theme_mode", newMode).apply()
+            sharedPreferences.edit().putInt("theme_mode", newMode).apply()
+
             // Save the checkbox state
             sharedPreferences.edit().putBoolean("checkbox_state", binding.changeMode.isChecked)
                 .apply()
         }
 
         alarmService = AlarmService(requireContext())
-
         // Retrieve the user's preference for the Switch state
-        val switchSharedPreferences =
-            requireContext().getSharedPreferences("SwitchPrefs", MODE_PRIVATE)
-        val isSwitchChecked = switchSharedPreferences.getBoolean(
-            "switch_state",
-            false
-        )
-
+        val switchSharedPreferences = getSharedPreferences("SwitchPrefs")
+        // Default to false if not found
+        val isSwitchChecked = switchSharedPreferences.getBoolean("switch_state", false)
 
         // Set the Switch state based on the saved state
         binding.setReminder.isChecked = isSwitchChecked
@@ -186,10 +181,8 @@ class StartFragment : Fragment() {
     }
 
     private fun alarmIsSet(): Boolean {
-        val sharedPreferences = requireContext().getSharedPreferences(
-            "MyAppPrefs",
-            MODE_PRIVATE
-        )
+        val sharedPreferences =
+            requireContext().getSharedPreferences(requireContext().packageName, MODE_PRIVATE)
         val dailyReminderTime = sharedPreferences.getLong("dailyReminderTime", -1)
 
         return dailyReminderTime != -1L // Return true if dailyReminderTime is not equal to -1
@@ -261,10 +254,8 @@ class StartFragment : Fragment() {
                     val selectedTimeInMillis = selectedTime.timeInMillis
 
                     // Store the selected time in SharedPreferences
-                    val sharedPreferences = context.getSharedPreferences(
-                        "MyAppPrefs",
-                        MODE_PRIVATE
-                    )
+                    val sharedPreferences =
+                        context.getSharedPreferences(requireContext().packageName, MODE_PRIVATE)
                     sharedPreferences.edit()
                         .putLong("dailyReminderTime", selectedTimeInMillis)
                         .apply()

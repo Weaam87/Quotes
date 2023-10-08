@@ -2,6 +2,7 @@ package com.dailyQuoteApp.quotes.notifications
 
 import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 
 /**
@@ -13,10 +14,7 @@ class BootReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == "android.intent.action.BOOT_COMPLETED") {
             // Retrieve the stored daily reminder time from SharedPreferences
-            val sharedPreferences = context.getSharedPreferences(
-                "MyAppPrefs",
-                Context.MODE_PRIVATE
-            )
+            val sharedPreferences = context.getSharedPreferences(context.packageName, MODE_PRIVATE)
             val dailyReminderTimeInMillis =
                 sharedPreferences.getLong("dailyReminderTime", -1)
 
@@ -32,10 +30,7 @@ class BootReceiver : BroadcastReceiver() {
     }
 
     fun deleteBootReceiverSharedPreferences(context: Context) {
-        val sharedPreferences = context.getSharedPreferences(
-            "MyAppPrefs",
-            Context.MODE_PRIVATE
-        )
+        val sharedPreferences = context.getSharedPreferences(context.packageName, MODE_PRIVATE)
 
         // Use an editor to remove the specific preference
         val editor = sharedPreferences.edit()
