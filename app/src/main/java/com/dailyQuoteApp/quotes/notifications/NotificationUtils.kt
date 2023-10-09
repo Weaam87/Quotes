@@ -29,7 +29,7 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
     // Load a bitmap for the notification's big picture style
     val quoteImage = BitmapFactory.decodeResource(
         applicationContext.resources,
-        R.drawable.quote_icon
+        R.drawable.inspiration
     )
 
     // Create a BigPictureStyle for the notification
@@ -40,7 +40,7 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         applicationContext,
         applicationContext.getString(R.string.notification_channel_id)
     )
-        .setSmallIcon(R.drawable.quote_icon)
+        .setSmallIcon(R.drawable.inspiration)
         .setContentTitle(applicationContext.getString(R.string.notification_title))
         .setContentText(messageBody)
         .setContentIntent(contentPendingIntent)

@@ -19,6 +19,7 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
@@ -86,6 +87,31 @@ class StartFragment : Fragment() {
             viewLifecycleOwner,
             QuotesOnBackPressedCallback(slidingPaneLayout)
         )
+
+        // Set an OnEditorActionListener for the EditText to handle the "Done" action (Enter key)
+        binding.chooseNumberEditText.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                val stringInTextField = binding.chooseNumberEditText.text.toString()
+                val userIndex = stringInTextField.toIntOrNull()
+                if (userIndex != null) {
+                    binding.chooseNumberEditText.text?.clear()
+                    if (userIndex > 100 || userIndex == 0) {
+                        Toast.makeText(context, "Choose Number Between 1 and 100", Toast.LENGTH_SHORT)
+                            .show()
+                    } else {
+                        binding.slidingPaneLayout.openPane()
+                        viewModel.getIndex(userIndex - 1)
+                        // hide the keyboard after clicking Enter
+                        hideKeyboard()
+                    }
+                } else {
+                    Toast.makeText(context, "Choose Number", Toast.LENGTH_SHORT).show()
+                }
+                true // Return true to indicate that the event has been handled
+            } else {
+                false // Return false for other action events
+            }
+        }
 
         binding.getQuoteNumber.setOnClickListener {
             val stringInTextField = binding.chooseNumberEditText.text.toString()

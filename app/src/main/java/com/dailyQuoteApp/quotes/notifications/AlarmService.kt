@@ -26,7 +26,7 @@ class AlarmService(private val context: Context) {
     fun setRepetitiveAlarm(timeInMillis: Long) {
         alarmManager?.let {
             // Calculate the time for the next alarm, which will be 24 hours from the current time
-            val repeatInterval = 1 * 60 * 1000L // 1 minutes in milliseconds
+            val repeatInterval = 24 * 60 * 60 * 1000L // 24 hours in milliseconds
 
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

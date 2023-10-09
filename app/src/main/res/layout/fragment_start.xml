@@ -29,7 +29,7 @@
 
                 <TextView
                     android:id="@+id/choose_number_textView"
-                    style="@style/Widget.Quotes.TextView.name"
+                    style="@style/Widget.Quotes.TextView.label"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:text="@string/choose_number_text"
@@ -52,6 +52,7 @@
                         android:id="@+id/choose_number_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/lilita_one"
                         android:inputType="number" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -105,9 +106,9 @@
 
                 <TextView
                     android:id="@+id/switch_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="8dp"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"
+                    style="@style/Widget.Quotes.TextView.label"
                     android:text="@string/set_daily_reminder"
                     app:layout_constraintBottom_toBottomOf="@+id/set_reminder"
                     app:layout_constraintStart_toEndOf="@+id/set_reminder"
@@ -115,12 +116,11 @@
 
                 <com.google.android.material.checkbox.MaterialCheckBox
                     android:id="@+id/change_mode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="32dp"
                     android:minHeight="48dp"
                     android:text="@string/change_mode"
+                    style="@style/Widget.Quotes.TextView.label"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/set_reminder" />
 
