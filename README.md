@@ -4,7 +4,7 @@
 
 1. Retrieving data from the internet.
 2. Handling Push Notifications.
-3. Utilizing DataStore for persistent storage.
+3. Utilizing SharedPreferences for persistent storage, including user mode choice and alarm time reminders.
 4. Creating a custom JSON file and uploading it to a server.
 5. Implementing adaptive layouts with SlidingPaneLayout to accommodate different screen sizes.
 6. Making web service requests using Retrofit, Moshi, and Coil libraries.
@@ -17,3 +17,10 @@
 13. Applying Material design principles.
 14. Implementing one activity with multiple fragments.
 15. Incorporating LiveData and Data Binding.
+
+## Screenshots
+
+![Screenshot 1](./screenshot1.jpg)
+![Screenshot 2](./screenshot2.jpg)
+![Screenshot 3](./screenshot3.jpg)
+![Screenshot 4](./screenshot4.jpg)
