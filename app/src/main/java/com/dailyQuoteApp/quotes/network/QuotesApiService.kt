@@ -9,7 +9,7 @@ import retrofit2.http.GET
 
 //constant for the base URL for the web service.
 private const val BASE_URL =
-    "https://api.npoint.io"
+    "https://raw.githubusercontent.com/"
 
 //Create a Moshi object
 private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
@@ -19,7 +19,7 @@ private val retrofit = Retrofit.Builder().addConverterFactory(MoshiConverterFact
     .create(moshi)).baseUrl(BASE_URL).build()
 
 interface QuotesApiService {
-    @GET("/a4ec39c241f277b2f29e")
+    @GET("/Weaam87/data/main/quotes.json")
     suspend fun getQuotes() : List<QuotesData>
 }
 
