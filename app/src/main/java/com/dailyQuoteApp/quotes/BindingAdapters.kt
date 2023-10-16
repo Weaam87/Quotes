@@ -2,6 +2,7 @@ package com.dailyQuoteApp.quotes
 
 import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import coil.load
@@ -34,6 +35,13 @@ fun bindStatus(
         QuotesApiStatus.ERROR -> {
             statusImageView.visibility = View.VISIBLE
             statusImageView.setImageResource(R.drawable.ic_connection_error)
+
+            // Show a Toast message for the error
+            Toast.makeText(
+                statusImageView.context,
+                "A connection error occurred. Please try again later.",
+                Toast.LENGTH_LONG
+            ).show()
         }
 
         else -> {
